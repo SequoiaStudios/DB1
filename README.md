@@ -864,7 +864,7 @@ If you, like us, enjoy saving money, send us an email at [support@sequoiastudios
 ### <a href="#refunds" name="refunds">Refunds</a>
 So DB1 sucks for you. Sorry about that. [Email](mailto:support@sequoiastudios.io) us and we'll refund you as soon as possible. Let us know if there's anything we can do to mitigate that though.
 
-### <a href="#education-discount" name="education-discount">Educational Discount/a>
+### <a href="#education-discount" name="education-discount">Educational Discount</a>
 We'd love to be able to help out students, so if you are one, send us an email from your student account, with the projects or classes you'd like to use DB1 for, and we'll work something out!
 
 
