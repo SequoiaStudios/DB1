@@ -2,9 +2,9 @@ language: ruby
 script:
   - mkdir ../Sequoia-Studios
   - git clone --depth=50 --branch=master https://$CI_API_KEY@github.com/alexggordon/Sequoia-Studios.git alexggordon/Sequoia-Studios
-  - rm ../Sequoia-Studios/doc/db1.md
+  - rm alexggordon/Sequoia-Studios/doc/db1.md
   - cp README.md ../Sequoia-Studios/doc/db1.md
-  - cd ../Sequoia-Studios
+  - cd alexggordon/Sequoia-Studios
   - git add doc/db1.md
   - git commit -m "AUTO README UPDATE"
   - git push
