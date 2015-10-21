@@ -3,11 +3,14 @@ script:
   - mkdir ../Sequoia-Studios
   - git clone --depth=50 --branch=master https://$CI_API_KEY@github.com/alexggordon/Sequoia-Studios.git alexggordon/Sequoia-Studios
   - rm alexggordon/Sequoia-Studios/doc/db1.md
-  - cp README.md ../Sequoia-Studios/doc/db1.md
+  - cp README.md alexggordon/Sequoia-Studios/doc/db1.md
   - cd alexggordon/Sequoia-Studios
+  - git config --global user.email "support@sequoiastudios.io"
+  - git config --global user.name "TRAVIS CI ROBOT"
+  - git config --global push.default simple
   - git add doc/db1.md
   - git commit -m "AUTO README UPDATE"
-  - git push
+  - git push https://$CI_API_KEY@github.com/alexggordon/Sequoia-Studios.git
 addons:
   postgresql: "9.4"
 branches:
