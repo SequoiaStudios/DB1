@@ -1,10 +1,7 @@
 language: ruby
-env:
-  global:
-  - secure: "X/2Qsz9SaHp5JPe0W6Y/YgdF8BFgmjCh9RHrZUvHJEeb+aqTh70ZddIGMhJifRyrRUZeSNnzU6AO22PZKqWsfTqDW62VI92MXT7O2s1yCU81uGS6VH/+LG0L9aoi8cRxqjEHra4QmbxULw6KLRrwWxHcBYvr9u/gb0T1JPEukOMl6p3jIWfm5dAh3yijlCr+bpE5eiEuB2cKK8K3PQQkZ41lJPQP7+WNA2zQ+0iWRanN37ecrwEcmsY5OymFz/lIcgkOlg9VUynXj9b6EAWVj0dXscFwhLedV0hRIocgDt+2YxNr0ecRnwhdYcHPWEp/JVt5sWRlSOY9wnnL3IjUXkk/ySB6qorpubEJDHtrxdR5p7d0/ZfMTmXNe47MS76+2zV7ZKIOxch8c7Gi+MLwFpMkfVxdRylvbRevOnr1b43Jswc8ZJRuBs9ClHO2TC9hf9FVUaTkF+d/VG/lKQOH7LBT0T83kOVjr3dAF6AsVickrPNQrzmFJKyoXspgD5eWiZkd4Yih9oqCiyrJ3v1c7i4Ic+5Kf5UxRYtpSjaRNoePjJCNDNks+Yv/LACqHoFrJKR6toKvnccqolc4Kehw+vn0SVXw4wGZ/OMmCtUoxWu2lKDh74v8cfUoKfT4qFfpxHB0NTRb2lxGfMvz6+HB/UNLF6kTwmaBSd2wRxKRB58="
 script:
   - mkdir ../Sequoia-Studios
-  - git clone --depth=50 --branch=master git@github.com:alexggordon/Sequoia-Studios.git alexggordon/Sequoia-Studios
+  - git clone --depth=50 --branch=master https://$CI_API_KEY@github.com:alexggordon/Sequoia-Studios.git alexggordon/Sequoia-Studios
   - rm ../Sequoia-Studios/doc/db1.md
   - cp README.md ../Sequoia-Studios/doc/db1.md
   - cd ../Sequoia-Studios
@@ -13,9 +10,6 @@ script:
   - git push
 addons:
   postgresql: "9.4"
-services:
-  - redis-server
-
 branches:
   only:
     - master
