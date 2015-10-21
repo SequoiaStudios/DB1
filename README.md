@@ -394,6 +394,7 @@ If you would like to see the default options, please see the file at :
         "user@1.1.1.1":
         {
             "database_type": "MySQL",
+            "connection_name": "user@database.com",
             "password": "hunter2",
             "port": 3306,
             // this is a really slow connection
@@ -402,6 +403,7 @@ If you would like to see the default options, please see the file at :
         "user@localhost":
         {
             "database_type": "PostgreSQL",
+            "connection_name": "alexggordon@localhost",
             "password": "",
             "port": 5432
         }
