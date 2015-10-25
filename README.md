@@ -254,7 +254,7 @@ This command executes sql and exports the results to the Results Window. The Res
 
 By default, the Results Window will look like this upon query execution:
 
-![Results Window](http://i.imgur.com/AIkWzpV.png)
+![Results Window](https://i.imgur.com/AIkWzpV.png)
 
 The sql that this command executes can be passed to it through a couple of ways. 
 
@@ -340,7 +340,7 @@ This command will allow you to change the isolation level of your current Postgr
 * Repeatable read
 * Serializable
 
-To read more about PostgreSQL isolation levels, please check out the [PostgreSQL documentation.](http://www.postgresql.org/docs/9.1/static/transaction-iso.html)
+To read more about PostgreSQL isolation levels, please check out the [PostgreSQL documentation.](https://www.postgresql.org/docs/9.1/static/transaction-iso.html)
 
 ### <a href="#set-deferrable" name="set-deferrable">Set Deferrable (PostgreSQL Only)</a>
 Command ```db1_set_deferrable```
@@ -630,7 +630,7 @@ Default Setting:
 
 This setting only applies if the [```"show_execution_datetime"```](#show-execution-datetime) setting is ```true```. It defines the format of the date and time.
 
-We strongly recommend using [strftime.org](http://strftime.org/) to format this. 
+We strongly recommend using [strftime.org](https://strftime.org/) to format this. 
 
 If this is formatted incorrectly, nothing will be displayed. 
 
