@@ -8,6 +8,9 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
 * [Installation](#installation)
 * [Quick Start](#quick-start)
 * [Reporting Issues and Feature Requests](#feedback)
+* [Changelog](#changelog)
+    - [V1.0.1](#v101)
+    - [V1.0.2](#v102)
 * [Commands](#commands)
     - [Connect To Database](#connect)
     - [Change Database](#use-database)
@@ -83,6 +86,8 @@ The first step to getting started is making sure that DB1 is [installed](#instal
 However, the big ones to get started are [```db1_connect```](#connect), [```db1_execute_sql```](#execute-sql), [```db1_execute_quick_sql```](#execute-quick-sql) and [```db1_execute_template```](#execute-template).
 
 [```db1_connect```](#connect) initiates a connection for a single view in Sublime Text. This means that there's a one-to-one relationships of connections to views. Each connection is then tied to the database it's connected to, such that in view #1 you can execute queries on database 'A', and in View #2 you can execute queries on database 'B'. 
+
+When using the [```db1_connect```](#connect) you'll need to know the username, host, port (if it's not the default) and password of the database you're connecting to.
 
 To help streamline workflow, if there is not a connection on a view when one of the ```db1_execute``` commands is run, the connection process will be initiated before the query is then run (this allows for a more streamlined workflow). 
 
@@ -217,6 +222,27 @@ Please report all issues and feedback to the [DB1 Issue and Request Tracker](htt
 
 In addition to issues and feature requests, the documentation file used here is also hosted in that repository so as to track changes.
 
+## <a href="#changelog" name="changelog">Changelog</a>
+
+### <a href="#v101" name="v101">V1.0.1</a>
+
+##### Improvements:
+  * None.
+
+##### Bug Fixes:
+  * Removed Ubuntu dependency on Libpython that caused DB1 to not load on 64-but ubuntu.
+
+### <a href="#v102" name="v102">V1.0.2</a>
+
+##### Improvements:
+  * You can now specify ports using user@host:port syntax.
+  * Postgresql 8.1 and early have increased performance.
+  * You can now customize all aspects of a connection in the "stored_connections" setting.
+
+##### Bug Fixes:
+  * Fixed a bug causing issues with older versions of postgresql.
+  * Fixed a bug that caused DB1 to sometimes ignore ports that were manually changed.
+
 
 ## <a href="#commands" name="commands">Commands</a>
 As a note, all commands make heavy use of the Sublime Text status bar located at the bottom of the screen. After a command is executed, the status bar is almost always updated with the result, and in the case of longer running commands (connecting, and query execution) a loading indicator will show. 
@@ -231,7 +257,11 @@ This initiates a connection to a database. Required information is:
 * db_username@host
 * password
 
-After a connection is initiated, you will be prompted for the database you would like to use. You can select any database you'd like to, (you can always [change later](#use-database)). 
+If your database uses a custom port, you can also enter the port during the connection. You can do this when prompted for the address (```user@host:port```) and by appending the port onto the end of connection string after a ```:``` marker. The full connection string should look similar to ```alex@hostname:1111```. 
+
+After a connection is initiated, you will be prompted for the database you would like to use. You can select any database you'd like to, (you can always [change later](#use-database)).
+
+If there is an issue connecting, the error will be displayed at the bottom of your view. 
 
 For issues connecting, please see the [connection issues](#connection-issues) section. 
 
@@ -375,41 +405,52 @@ The command opens the [DB1 Issue and Feature Tracker](https://github.com/Sequoia
 
 ## <a href="#connection-issues" name="connection-issues">Connection Issues</a>
 
+One of the more common connection issues is connections timing out. By default the connection timeout for a new connection is 5 seconds. You can change the amount of time a connection takes to timeout in the settings (see the [stored connections](#stored-connections) setting for examples). 
+
+
 ## <a href="#settings" name="settings">Settings</a>
 To edit your personal DB1 settings, please navigate to:
 
 ``` "Preferences" > "Package Settings" > "DB1" > "Settings - User"```
 
-If you would like to see the default options, please see the file at :
+If you would like to see the default options, please see the file at:
 
 ``` "Preferences" > "Package Settings" > "DB1" > "Settings - Default"```
 
-**REMEMBER,** the default settings are routinely reset. While saving your user settings there may temporarily work, please save the m in the user settings mentioned above.
+**REMEMBER,** the default settings are routinely reset. While saving your user settings there may temporarily work, please save them in the user settings mentioned above.
 
 ### <a href="#stored-connections" name="stored-connections">Stored Connections</a>
-
 
     "stored_connections":
     {
         "user@1.1.1.1":
         {
             "database_type": "MySQL",
-            "connection_name": "user@database.com",
             "password": "hunter2",
             "port": 3306,
-            // this is a really slow connection
-            "connection_timeout": 5
+            // settings below are optional. The setting they will default to is shown. 
+            // 'DEFAULT' refers to the database default for the setting. 
+            "autocommit": false,
+            // connection timeout in seconds
+            "connection_timeout": 5,
         },
         "user@localhost":
         {
             "database_type": "PostgreSQL",
-            "connection_name": "alexggordon@localhost",
             "password": "",
-            "port": 5432
+            "port": 5432,
+            // settings below are optional. The setting they will default to is shown. 
+            // 'DEFAULT' refers to the database default for the setting. 
+            "autocommit": false,
+            "connection_timeout": 5,
+            // optional, postgresql only settings
+            "isolation_level": 'DEFAULT', // can be 0, 1, 2, or 3. 
+            "readonly": false,
+            "deferrable": 'DEFAULT'
         }
     }
 
-Stored Connections are where all stored user database connections go. They are automatically stored through the [db1_connect](#connect) command. If you have a custom port to use, please add the connection manually, by following the syntax:
+Stored Connections are where all stored user database connections go. They are automatically stored through the [db1_connect](#connect) command. If you have a custom port to use, you can update the connection manually, using following the syntax:
 
     "stored_connections":
     {
@@ -419,7 +460,13 @@ Stored Connections are where all stored user database connections go. They are a
     }
 
 
-In general all field are required, in the case of password-less PostgreSQL authentication, please leave the password field blank. 
+Or when using the [db1_connect](#connect) command, you can append the port onto the end of the connection string, like:
+
+    user@host:port
+    
+
+
+In general all field are required, in the case of password-less PostgreSQL authentication, please leave the password field as an empty string (```password: ""```). 
 
 If you use SSH tunneling to connect to your database, please use the local port of the SSH tunnel in the settings.
 
@@ -429,6 +476,7 @@ Default Setting:
 
     "set_syntax_on_execute": True
 
+
 When set to true, if a view does not have a syntax file assigned to it when executing SQL, then DB1 will set the syntax of the view to the relevant sql file (either PostgreSQL or MySQL).
 
 ### <a href="#results-table-format" name="results-table-format">Results Table Format</a>
@@ -436,9 +484,10 @@ Default Setting:
 
     "results_table_format": "psql"
 
+
 The Results Table Format defines the appearance of the box around the **just** the query results. This applies to both the Results Window and Quick Query view. 
 
-Available Options when executing the query ``` select * from pet;```
+Available Options when executing the query ```select * from pet;```
 
 * **"grid"**
 
