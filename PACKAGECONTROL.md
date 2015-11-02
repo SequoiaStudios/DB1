@@ -30,18 +30,15 @@ If [Package Control](https://packagecontrol.io) is not already installed, please
 ## <a href="#quick-start" name="quick-start">Quick Start</a>
 The first step to getting started is making sure that DB1 is [installed](#installation). 
 
-Once that's finished, the first big command is ```db1_connect```. ```db1_connect``` initiates a connection for a single view in Sublime Text. This means that there's a one-to-one relationships of connections to views. Each connection is then tied to the database it's connected to, such that in view #1 you can execute queries on database 'A', and in View #2 you can execute queries on database 'B'. 
+Once that's finished, the first big command is ```DB1: Connect to a Database```. ```DB1: Connect to a Database``` initiates a connection for a single view in Sublime Text. This means that there's a one-to-one relationship of connections to views. Each connection is then tied to the database it's connected to, such that in view #1 you can execute queries on database 'A', and in View #2 you can execute queries on database 'B'. 
 
-When using the ```db1_connect``` you'll need to know the username, host, port (if it's not the default) and password of the database you're connecting to.
+When using the ```DB1: Connect to a Database``` you'll need to know the username, host, port (if it's not the default) and password of the database you're connecting to. In cases like PostgreSQL authentication (where authentication is [trust](https://www.postgresql.org/docs/9.0/static/auth-methods.html) based) a password is not required. 
 
-To help streamline workflow, if there is not a connection on a view when one of the ```db1_execute``` commands is run, the connection process will be initiated before the query is then run (this allows for a more streamlined workflow). 
+To help streamline workflow, if there is not a connection active in the view, then running one of the ```DB1: Execute ... SQL``` will initiate the connection process before the query is then run. 
 
-To connect to a database, you'll need a username, password and host(which can be localhost) for the database. In addition to this, in cases like PostgreSQL authentication (where authentication is [trust](https://www.postgresql.org/docs/9.0/static/auth-methods.html) based) a password is not required. 
-
-Once you're connected, DB1 will prompt you with a list of databases to choose from. The database you select is the one you can now execute queries against. 
+Once you're connected, DB1 will prompt you with a list of databases to choose from. The database you select is the one you can now execute queries against. You can then change databases using the ```DB1: Change Database``` command. 
 
 Now that we're ready to run some queries, DB1 supports a couple different workflows. 
-
 
 1. The Results Window Workflow 
 
