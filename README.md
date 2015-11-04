@@ -11,6 +11,7 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
 * [Changelog](#changelog)
     - [V1.0.1](#v101)
     - [V1.0.2](#v102)
+    - [V1.1.0](#v110)
 * [Commands](#commands)
     - [Connect To Database](#connect)
     - [Change Database](#use-database)
@@ -21,7 +22,7 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
     - [Commit Changes](#commit-changes)
     - [Rollback Changes](#rollback-changes)
     - [Toggle Autocommit](#toggle-autocommit)
-    - [Set Isolation Level (PostgreSQL Only)](#set-isolation-level)
+    - [Set Isolation Level](#set-isolation-level)
     - [Set Deferrable (PostgreSQL Only)](#set-deferrable)
     - [Set Readonly (PostgreSQL Only)](#set-readonly)
     - [Open Results Window](#open-results-window)
@@ -40,7 +41,7 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
     - [Show Execution Datetime](#show-execution-datetime)
     - [Datetime Format](#datetime-format)
     - [Show Autocommit Status](#show-autocommit-status)
-    - [Show Isolation Level (PostgreSQL only)](#show-isolation-level)
+    - [Show Isolation Level](#show-isolation-level)
     - [Show Deferrable Status (PostgreSQL only)](#show-deferrable-status)
     - [Show Readonly Status (PostgreSQL only)](#show-readonly-status)    
     - [Align Numbers](#align-numbers)
@@ -48,7 +49,7 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
     - [Erase Results Window](#erase-results-window)
     - [Focus Results Window on Execution](#focus-results-window-on-execution)
     - [Results Window Append Style](#results-window-append-style)
-    - [Results Window Location Osx](#results-window-location-osx)
+    - [Results Window Location OSX](#results-window-location-osx)
     - [Results Window Location Windows](#results-window-location-windows)
     - [Results Window Location Linux](#results-window-location-linux) 
 * [Key Bindings](#key-bindings)
@@ -66,6 +67,7 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
     - [psycopg2](#psycopg2)
     - [sqlparse](#sqlparse)
     - [tabulate](#tabulate)
+    - [fuzzyfilenav](#fuzzyfilenav)
 
 ## <a href="#installation" name="installation">Installation</a>
 
@@ -81,26 +83,21 @@ If [Package Control](https://packagecontrol.io) is not already installed, please
 
 
 ## <a href="#quick-start" name="quick-start">Quick Start</a>
-The first step to getting started is making sure that DB1 is [installed](#installation). Once that's done, it might help to check out some of the [commands](#commands) available to DB1. 
+The first step to getting started is making sure that DB1 is [installed](#installation). Once that's done, it might help to check out some of the [commands](#commands) available to DB1.  
 
-However, the big ones to get started are [```db1_connect```](#connect), [```db1_execute_sql```](#execute-sql), [```db1_execute_quick_sql```](#execute-quick-sql) and [```db1_execute_template```](#execute-template).
+Once that's finished, the first big command is ```DB1: Connect to a Database```. ```DB1: Connect to a Database``` initiates a connection for a single view in Sublime Text. This means that there's a one-to-one relationship of connections to views. Each connection is then tied to the database it's connected to, such that in view #1 you can execute queries on database 'A', and in View #2 you can execute queries on database 'B'. 
 
-[```db1_connect```](#connect) initiates a connection for a single view in Sublime Text. This means that there's a one-to-one relationships of connections to views. Each connection is then tied to the database it's connected to, such that in view #1 you can execute queries on database 'A', and in View #2 you can execute queries on database 'B'. 
+When using the ```DB1: Connect to a Database``` you'll need to know the database type, username, host, port (if it's not the default) and password of the database you're connecting to. In cases like PostgreSQL authentication (where authentication is [trust](https://www.postgresql.org/docs/9.0/static/auth-methods.html) based) a password is not required. 
 
-When using the [```db1_connect```](#connect) you'll need to know the username, host, port (if it's not the default) and password of the database you're connecting to.
+To help streamline workflow, if there is not a connection active in the view, then running one of the ```DB1: Execute ... SQL``` will initiate the connection process before the query is then run. 
 
-To help streamline workflow, if there is not a connection on a view when one of the ```db1_execute``` commands is run, the connection process will be initiated before the query is then run (this allows for a more streamlined workflow). 
-
-To connect to a database, you'll need a username, password and host(which can be localhost) for the database. In addition to this, in cases like PostgreSQL authentication (where authentication is [trust](https://www.postgresql.org/docs/9.0/static/auth-methods.html) based) a password is not required. 
-
-Once you're connected, DB1 will prompt you with a list of databases to choose from. The database you select is the one you can now execute queries against. 
+Once you're connected, DB1 will prompt you with a list of databases to choose from. The database you select is the one you can now execute queries against. You can then change databases using the ```DB1: Change Database``` command. 
 
 Now that we're ready to run some queries, DB1 supports a couple different workflows. 
 
-
 1. The Results Window Workflow 
 
-The Results Window workflow allows for you to have a continuously open window to display query results. This contrasts the disposability of the Quick Query window, where results are lost when the window is closed.
+Using the command ```DB1: Execute SQL``` will open the Results Window. The Results Window allows for you to have a continuously open window to display query results. This contrasts the disposability of the Quick Query window, where results are lost when the window is closed.
 
 ![Results Window](https://i.imgur.com/gMS8rH4.png)
 
@@ -113,7 +110,8 @@ In addition to the above setting, by default the contents of Results Window is d
 This workflow tends to work really well if you'd like to be able to interact with results, as you can do things like search for text in the Results Window. 
 
 2. The Quick Query view. 
-The Quick Query view allows you to output the results of a query to a disposable (you can't save it, and when it's gone, you can't recover the contents) output view at the bottom of the window. 
+
+Using the command ```DB1: Execute Quick SQL``` will open the Quick Query view. The Quick Query view allows you to output the results of a query to a disposable (you can't save it, and when it's gone, you can't recover the contents) output view at the bottom of the window. 
 
 ![Quick Query view](https://i.imgur.com/37qXYFW.png)
 
@@ -232,6 +230,7 @@ In addition to issues and feature requests, the documentation file used here is 
 ##### Bug Fixes:
   * Removed Ubuntu dependency on Libpython that caused DB1 to not load on 64-but ubuntu.
 
+
 ### <a href="#v102" name="v102">V1.0.2</a>
 
 ##### Improvements:
@@ -244,6 +243,19 @@ In addition to issues and feature requests, the documentation file used here is 
   * Fixed a bug that caused DB1 to sometimes ignore ports that were manually changed.
 
 
+### <a href="#v110" name="v110">V1.1.0</a>
+
+##### Feature Additions:
+  * You can now connect to MariaDB and local SQLite databases through DB1.
+
+##### Improvements:
+  * Improved settings management and error correcting.
+
+##### Bug Fixes:
+  * Fixed 'null' port storage for some databases using the default port.
+  * Fixed result window being reopened if the results window was in a separate window pane.
+  * Fixed some connection timeout issues. 
+
 ## <a href="#commands" name="commands">Commands</a>
 As a note, all commands make heavy use of the Sublime Text status bar located at the bottom of the screen. After a command is executed, the status bar is almost always updated with the result, and in the case of longer running commands (connecting, and query execution) a loading indicator will show. 
 
@@ -254,10 +266,10 @@ Command: ```db1_connect```
 This initiates a connection to a database. Required information is:
 
 * Database Type
-* db_username@host
+* db_username@host:port (:port is optional. If none is specified, then the default port will be used.)
 * password
 
-If your database uses a custom port, you can also enter the port during the connection. You can do this when prompted for the address (```user@host:port```) and by appending the port onto the end of connection string after a ```:``` marker. The full connection string should look similar to ```alex@hostname:1111```. 
+If your database uses a custom port, you can also enter the port during the connection. You can do this when prompted for the address (```user@host:port```) and by appending the port onto the end of connection string after a ```:``` marker. The full connection string, with the optional port, should look similar to ```alex@hostname:1111```. 
 
 After a connection is initiated, you will be prompted for the database you would like to use. You can select any database you'd like to, (you can always [change later](#use-database)).
 
@@ -315,18 +327,20 @@ The ```db1_execute_template``` command is special in that it allows the user to 
         "args": {
             "mysql_pattern": "select * from %s;",
             "postgresql_pattern": "select * from %s;",
+            "maria_pattern": "select * from %s;",
+            "sqlite_pattern": "select * from %s;",
             "output_type": "quickpanel"
         }
     }
 </code></pre>
 
-In the case of this command, there is one variable, represented by the ```%s``` in the ```mysql_pattern``` and ```postgresql_pattern```.  If the text **```pet```** was highlighted in a Sublime Text view (the Quick Query view doesn't count), and the keyboard shortcut ```command+shift+1``` was run, then the sql statement 
+In the case of this command, there is one variable, represented by the ```%s```.  If the text **```pet```** was highlighted in a Sublime Text view (the Quick Query view doesn't count), and the keyboard shortcut ```command+shift+1``` was run, then the sql statement 
 
 ```select * from pet;``` 
 
 would be run. 
 
-It's important to note that variables **are not required** for this command nor are both database types required. The following is an example of a simpler version of the template. 
+It's important to note that variables **are not required** for this command nor are multiple ```"_pattern"``` options required. To execute SQL against just a MySQL database, then just the ```"mysql_pattern"``` is required, like the following simpler version of the template. 
 
 <pre><code>    {
         "keys": ["command+shift+1"],
@@ -360,10 +374,14 @@ Command ```db1_toggle_autocommit```
 
 This command will either disable autocommit or enable it. When the command is run, if you have previously toggled autocommit, the menu will show you the currently set value. 
 
-### <a href="#set-isolation-level" name="set-isolation-level">Set Isolation Level (PostgreSQL Only)</a>
+### <a href="#set-isolation-level" name="set-isolation-level">Set Isolation Level</a>
 Command ```db1_set_isolation_level```
 
-This command will allow you to change the isolation level of your current PostgreSQL connection. The values are:
+This command will allow you to change the isolation level of your current PostgreSQL or SQLite connection
+
+##### PostgreSQL: 
+
+The values are:
 
 * Read uncommitted  
 * Read committed
@@ -371,6 +389,18 @@ This command will allow you to change the isolation level of your current Postgr
 * Serializable
 
 To read more about PostgreSQL isolation levels, please check out the [PostgreSQL documentation.](https://www.postgresql.org/docs/9.1/static/transaction-iso.html)
+
+##### SQLite:
+
+The values are:
+
+* None
+* DEFERRED
+* IMMEDIATE
+* EXCLUSIVE
+
+For SQLite, autocommit is tied into isolation level. When the isolation level is set to None, then autocommit is turned on, however, all other isolation levels disable autocommit for SQLite.
+
 
 ### <a href="#set-deferrable" name="set-deferrable">Set Deferrable (PostgreSQL Only)</a>
 Command ```db1_set_deferrable```
@@ -693,14 +723,17 @@ By default, this will show the status for the connection. This defaults to the d
 
 If [Autocommit](#toggle-autocommit) is "off", then any changes must be [committed](#commit-changes) or [rolled back](#rollback-changes) before they have a permanent effect. 
 
-If the connection is closed (Sublime Text is quit, or internet connection is lost), changes will be rolled back. 
+If the connection is closed (Sublime Text is quit, or internet connection is lost), all changes will be rolled back. 
 
 ### <a href="#show-isolation-level" name="show-isolation-level">Show Isolation Level (PostgreSQL only)</a>
 Default Setting:
 
     "show_isolation_level": false
 
-Will not show by default. When set to ```true``` this will show the isolation level of the connection. It will show one of the following:
+Will not show by default. When set to ```true``` this will show the isolation level of the connection. 
+
+##### PostgreSQL:
+Show isolation level will show one of the following:
 
 * ```Isolation Level Database Default.```
 * ```Isolation Level Read Committed.```
@@ -708,7 +741,16 @@ Will not show by default. When set to ```true``` this will show the isolation le
 * ```Isolation Level Serializable.```
 * ```Isolation Level Read Uncommitted.```
 
-The isolation level can be changed through the [Set Isolation Level](#set-isolation-level) command. 
+##### SQLite:
+Show isolation level will show one of the following:
+
+* ```Isolation Level None```
+* ```Isolation Level Deferred```
+* ```Isolation Level Immediate```
+* ```Isolation Level Exclusive```
+
+
+The isolation level for both database types can be changed through the [Set Isolation Level](#set-isolation-level) command. 
 
 ### <a href="#show-deferrable-status" name="show-deferrable-status">Show Deferrable Status (PostgreSQL only)</a>
 Default Setting:
@@ -840,18 +882,20 @@ All other DB1 commands (listed below) can be set in the ```"Key Bindings - User"
         "args": {
             "mysql_pattern": "select * from %s;",
             "postgresql_pattern": "select * from %s;",
+            "maria_pattern": "select * from %s;",
+            "sqlite_pattern": "select * from %s",
             "output_type": "window"
         }
     }
 </code></pre>
 
-In the case of this command, there is one variable, represented by the ```%s``` in the ```mysql_pattern``` and ```postgresql_pattern```.  If the text **```pet```** was highlighted in a Sublime Text view (the Quick Query view doesn't count), and the keyboard shortcut ```command+shift+1``` was run, then the sql statement 
+In the case of this command, there is one variable, represented by the ```%s```.  If the text **```pet```** was highlighted in a Sublime Text view (the Quick Query view doesn't count), and the keyboard shortcut ```command+shift+1``` was run, then the sql statement 
 
 ```select * from pet;``` 
 
-would be run. 
+would be run in the current view. As usual, if there is no connection active in the view, you will be prompted to initiate one.
 
-It's important to note that variables **are not required** for this command, and an **indefinite number of variables** can be put in. For more information, see the [```db1_execute_template```](#execute-template) documentation.
+It's important to note that variables **are not required** for this command, and an **indefinite number of variables** can be used. For more information, see the [```db1_execute_template```](#execute-template) documentation.
 
 
 **All DB1 Commands:**
@@ -891,7 +935,7 @@ After it's entered, your settings file should look similar to this:
 }
 </code></pre>
 
-Then place those in the DB1 user settings file (remember, you can't modify them after purchasing). If you receive a message like:
+Then place those in the DB1 user settings file (remember, you can't modify the license email or name after purchasing). If you receive a message like:
 
 ![error](https://i.imgur.com/fUp9Oja.png)
 
@@ -1078,6 +1122,25 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </code></pre>
+
+
+### <a href="https://github.com/facelessuser/FuzzyFileNav" name="fuzzyfilenav">FuzzyFileNav</a>
+
+Licensed under the MIT License.
+
+<pre><code>License
+Fuzzy File nav is released under the MIT license.
+
+Copyright (c) 2012 - 2015 Isaac Muse isaacmuse@gmail.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+</code></pre>
+
 
 
 
