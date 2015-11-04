@@ -13,6 +13,8 @@ As an introduction to DB1 (after [installing](#installation)), we'd highly sugge
 * [Changelog](#changelog)
     - [V1.0.1](#v101)
     - [V1.0.2](#v102)
+    - [V1.1.0](#v110)
+
 
 ## <a href="#installation" name="installation">Installation</a>
 
@@ -89,4 +91,17 @@ In addition to issues and feature requests, the documentation file used here is 
 ##### Bug Fixes:
   * Fixed a bug causing issues with older versions of postgresql.
   * Fixed a bug that caused DB1 to sometimes ignore ports that were manually changed.
+
+### <a href="#v110" name="v110">V1.1.0</a>
+
+##### Feature Additions:
+  * You can now connect to MariaDB and local SQLite databases through DB1.
+
+##### Improvements:
+  * Improved settings management and error correcting.
+
+##### Bug Fixes:
+  * Fixed 'null' port storage for some databases using the default port.
+  * Fixed result window being reopened if the results window was in a separate window pane.
+  * Fixed some connection timeout issues. 
 
