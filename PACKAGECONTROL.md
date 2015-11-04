@@ -1,6 +1,6 @@
 # DB1: A Sublime Text Database Client
 
-DB1 allows you to execute queries against multiple database types (currently PostgreSQL and MySQL) from inside Sublime without installing any dependencies (a local database installation is not required). 
+DB1 allows you to execute queries against multiple database types (currently PostgreSQL, MySQL, SQLite, and MariaDB) from inside Sublime without installing any dependencies (a local database installation is not required). 
 
 If you'd like to read the full documentation for DB1, you can see it [here](https://sequoiastudios.io/db1/documentation)
 
