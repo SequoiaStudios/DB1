@@ -79,7 +79,7 @@ In addition to issues and feature requests, the documentation file used here is 
   * None.
 
 ##### Bug Fixes:
-  * Removed Ubuntu dependency on Libpython that caused DB1 to not load on 64-but ubuntu.
+  * Removed Ubuntu dependency on Libpython that caused DB1 to not load on x64_86 Linux.
 
 ### <a href="#v102" name="v102">V1.0.2</a>
 
